@@ -1,0 +1,11 @@
+bank_dlt_project/
+├── pipelines/
+│   ├── bronze_layer.py
+│   ├── silver_layer.py
+│   ├── gold_layer.py
+│   └── configuration/
+│       └── pipeline_config.json
+├── schemas/
+│   └── banking_schemas.py
+└── utils/
+    └── helpers.py

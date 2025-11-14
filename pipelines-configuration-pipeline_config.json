@@ -1,0 +1,49 @@
+{
+  "pipeline_config": {
+    "name": "banking_dlt_pipeline",
+    "development": true,
+    "continuous": false,
+    "photon": true,
+    "libraries": [
+      {
+        "notebook": {
+          "path": "/pipelines/bronze_layer"
+        }
+      },
+      {
+        "notebook": {
+          "path": "/pipelines/silver_layer"
+        }
+      },
+      {
+        "notebook": {
+          "path": "/pipelines/gold_layer"
+        }
+      }
+    ],
+    "clusters": [
+      {
+        "label": "default",
+        "num_workers": 2,
+        "node_type_id": "Standard_D3_v2"
+      }
+    ],
+    "configuration": {
+      "spark.sql.adaptive.enabled": "true",
+      "spark.sql.adaptive.coalescePartitions.enabled": "true",
+      "delta.autoOptimize.optimizeWrite": "true",
+      "pipelines.autoOptimize.managed": "true"
+    },
+    "data_sources": {
+      "mysql_source": {
+        "host": "mysql-bank-server.database.azure.com",
+        "database": "banking_db",
+        "tables": ["customers", "accounts", "transactions"]
+      },
+      "cloudfiles_path": "/mnt/cloudfiles/banking_data/",
+      "adls_path": "abfss://banking-data@storageaccount.dfs.core.windows.net/"
+    },
+    "target_catalog": "banking",
+    "target_schema": "prod"
+  }
+}
